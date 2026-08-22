@@ -418,8 +418,8 @@ GameObject:
   - component: {fileID: 1011751761}
   - component: {fileID: 1011751760}
   - component: {fileID: 1011751759}
-  - component: {fileID: 1011751762}
   - component: {fileID: 1011751757}
+  - component: {fileID: 1011751762}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -491,7 +491,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
+  m_Sprite: {fileID: -9095717837082945937, guid: bd3cb4af8406d4436a2ae8c2aafe1f8d, type: 3}
   m_Color: {r: 0, g: 0.61525565, b: 0.90943396, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -514,10 +514,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 2
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 6
+  m_GravityScale: 12
   m_Material: {fileID: 6200000, guid: a00d9501b01f9f34b92a1d4602454f05, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
@@ -528,7 +528,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &1011751760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -584,13 +584,13 @@ MonoBehaviour:
     m_ActionName: 'Player/Poke[/Keyboard/v,/Keyboard/comma]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1011751755}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 1011751761}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnJump
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -655,9 +655,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bdd8b48666cc784ea200a23b933176b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  moveSpeed: 4
---- !u!58 &1011751762
-CircleCollider2D:
+  moveSpeed: 85.3
+  jumpPower: 4000
+  xDrag: 0.4
+  yDrag: 0.2
+  groundGrip: 12.8
+  groundCheckDistance: 0.67
+  groundCheckLayerMask:
+    serializedVersion: 2
+    m_Bits: 8
+--- !u!70 &1011751762
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -691,7 +699,8 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
+  m_Size: {x: 1, y: 2}
+  m_Direction: 0
 --- !u!1 &1856421908
 GameObject:
   m_ObjectHideFlags: 0
@@ -706,7 +715,7 @@ GameObject:
   - component: {fileID: 1856421910}
   - component: {fileID: 1856421914}
   - component: {fileID: 1856421913}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3137,7 +3146,7 @@ Tilemap:
     m_Data: {fileID: 1870963649, guid: 386daa87986e28a45b1aa77df2885a19, type: 3}
   - serializedVersion: 2
     m_RefCount: 0
-    m_Data: {fileID: 255013815, guid: 386daa87986e28a45b1aa77df2885a19, type: 3}
+    m_Data: {fileID: 1174734733, guid: 386daa87986e28a45b1aa77df2885a19, type: 3}
   - serializedVersion: 2
     m_RefCount: 0
     m_Data: {fileID: -650468078, guid: 386daa87986e28a45b1aa77df2885a19, type: 3}
