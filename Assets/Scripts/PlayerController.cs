@@ -52,7 +52,6 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.Log(rb.linearVelocityY);
         isGrounded = Physics2D.Linecast(transform.position, transform.position + Vector3.down * groundCheckDistance, groundCheckLayerMask);
 
         //Apply move force
