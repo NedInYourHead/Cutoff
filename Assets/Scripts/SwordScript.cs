@@ -9,5 +9,14 @@ public class SwordScript : MonoBehaviour
 	{
 		rb = GetComponent<Rigidbody2D>();
 	}
+	void OnEnable()
+	{
+		print("hi");
+		SwordsManager.Instance.swords.Add(this);
+	}
+	void OnDisable()
+	{
+		SwordsManager.Instance.swords.Remove(this);
+	}
 }
 
