@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     private float moveInput;
     private bool isGrounded;
     private float jumpBuffer;
+    private bool jumping;
 
     private Rigidbody2D rb;
 
@@ -46,12 +47,21 @@ public class PlayerController : MonoBehaviour
     {
         if (ctx.started)
         {
-            jumpBuffer = jumpBufferLength;
+            jumping = true;
+            print("jumping");
+        }
+        if (ctx.canceled)
+        {
+            jumping = false;
         }
     }
 
     private void FixedUpdate()
     {
+        if (jumping)
+        {
+            jumpBuffer = jumpBufferLength;
+        }
         isGrounded = Physics2D.Linecast(transform.position, transform.position + Vector3.down * groundCheckDistance, groundCheckLayerMask);
 
         //Apply move force
