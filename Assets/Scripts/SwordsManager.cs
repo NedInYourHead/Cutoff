@@ -1,14 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewMonoBehaviourScript : MonoBehaviour
+public class SwordsManager : MonoBehaviour
 {
 	public List<SwordScript> swords;
 	public SwordScript HeldSword = null;
 
+	public static SwordsManager Instance = null;
+
 	void Awake()
 	{
 		swords = new List<SwordScript>();
+
+		if (Instance) { Debug.LogError("duplicate singleton!"); Destroy(gameObject); }
+		Instance = this;
 	}
 
 	/// <summary>
@@ -21,7 +26,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
 		foreach (SwordScript a in swords)
 		{
-			float nd = Vector2.Distance(a.pos, mousePos);
+			float nd = Vector2.Distance(a.transform.position, mousePos);
 			if (nd < d)
 			{
 				d = nd;
@@ -29,6 +34,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
 			}
 		}
 
+		print(closest ? closest.name : "nothing grabbed");
 		return closest;
 	}
 
@@ -46,7 +52,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
 		// }
 		if (Input.GetMouseButtonUp(0))
 		{
-			HeldSword.vel = mousePos - HeldSword.pos;
+			HeldSword.rb.linearVelocity = (mousePos - (Vector2)HeldSword.transform.position) * 12f;
 			HeldSword = null;
 		}
 	}
