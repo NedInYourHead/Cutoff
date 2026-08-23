@@ -8,7 +8,10 @@ public class SwordsManager : MonoBehaviour
 {
 	public GameObject SWORD_PREFAB;
 
+	[Header("Gameplay Variables")]
 	public float THROW_STRENGTH = 1.0f;
+	public float GRAB_RANGE = 2.0f;
+	public float FOLLOW_SPEED = 5.0f;
 
 	[Header("debug")]
 	public List<SwordScript> swords;
@@ -27,21 +30,18 @@ public class SwordsManager : MonoBehaviour
 	void Start()
 	{
 		var o = Instantiate(SWORD_PREFAB, transform);
-		swords.Add(o.GetComponent<SwordScript>());
 	}
 
 	/// <summary>
 	/// Get the closest sword within `maxDistance` distance, else return null.
 	/// </summary>
-	SwordScript GetClosestSword(Vector2 mousePos, float maxDistance = 2.4f)
+	SwordScript GetClosestSword(Vector2 mousePos)
 	{
-		float d = maxDistance;
+		float d = GRAB_RANGE;
 		SwordScript closest = null;
 
 		foreach (SwordScript a in swords)
 		{
-			print(mousePos);
-			print(a.transform.position);
 			float nd = Vector2.Distance(a.transform.position, mousePos);
 			if (nd < d)
 			{
@@ -57,16 +57,23 @@ public class SwordsManager : MonoBehaviour
 	Vector2 mousePos = Vector2.zero;
 	void Update()
 	{
-		Vector2 tmp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		mousePos = tmp;
+		mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		if (HeldSword)
+		{
+			Vector2 md = (mousePos - (Vector2)HeldSword.transform.position);
+			if (md.magnitude > GRAB_RANGE)
+			{
+				if (HeldSword) HeldSword.rb.linearVelocity = md.normalized * THROW_STRENGTH;
+				HeldSword = null;
+			}
+			else
+			{
+				HeldSword.rb.linearVelocity = md.normalized * FOLLOW_SPEED;
+			}
+		}
 		if (Input.GetMouseButtonDown(0))
 		{
-			HeldSword = GetClosestSword(tmp);
-		}
-		if (Input.GetMouseButtonUp(0))
-		{
-			if (HeldSword) HeldSword.rb.linearVelocity = (mousePos - (Vector2)HeldSword.transform.position) * THROW_STRENGTH;
-			HeldSword = null;
+			HeldSword = GetClosestSword(mousePos);
 		}
 	}
 }

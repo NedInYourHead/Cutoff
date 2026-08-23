@@ -436,7 +436,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SwordsManager
   SWORD_PREFAB: {fileID: 7518752218726845207, guid: 9517a16d462b97e25870185350649030, type: 3}
-  THROW_STRENGTH: 1.6
+  THROW_STRENGTH: 33
+  GRAB_RANGE: 3
+  FOLLOW_SPEED: 10
   swords: []
   HeldSword: {fileID: 0}
 --- !u!4 &1430054864
